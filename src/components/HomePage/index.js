@@ -10,11 +10,11 @@ class HomePage extends Component {
 	}
 
 	fetchTyped(value) {
-		const { fetchData } = this.props;
+		const { fetchData, loginData } = this.props;
 		value ?
-			fetchData(`https://api.themoviedb.org/3/search/movie?api_key=${fetchData.key}&language=en-US&query=${value}&page=1&include_adult=false`)
+			fetchData(`https://api.themoviedb.org/3/search/movie?api_key=${loginData.key}&language=en-US&query=${value}&page=1&include_adult=false`)
 			:
-			fetchData(`https://api.themoviedb.org/3/movie/popular?api_key=${fetchData.key}&language=en-US&page=1`);
+			fetchData(`https://api.themoviedb.org/3/movie/popular?api_key=${loginData.key}&language=en-US&page=1`);
 	}
 
 	render() {

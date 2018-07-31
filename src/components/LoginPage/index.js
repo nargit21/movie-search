@@ -43,7 +43,7 @@ class Login extends Component {
 						<TextField
 							name='nickname'
 							fullWidth={true}
-							label='nickname'
+							label='Nickname'
 							onChange={(event) => this.inputHandler('nicknameInput', event)}
 							defaultValue='Nargit'
 							required={true}

@@ -3,26 +3,54 @@ import { connect } from 'react-redux';
 import SearchField from '../SearchField';
 import FilmCards from '../FilmCards';
 import { itemsFetchData } from '../../actions/items';
+import { Redirect} from 'react-router-dom';
 
 class HomePage extends Component {
 	state = {
-		page: 1,
+		searchValue: null,
+		prevPage: 1
 	}
 
-	fetchTyped(value) {
+	fetchDecider(value, newPage, from) {
+		const { searchValue } = this.props;
+		
+		from === 'search' && this.setState(() => ({searchValue: value}), (a, b, v) => {
+			if(!value) {
+				return this.fetchPopulars(newPage)
+			} else {
+				return this.fetchTyped(value, newPage)
+			}
+		})
+
+		if(searchValue) {
+			this.fetchTyped(searchValue, newPage)
+		} else if (from !== 'search') {
+			this.fetchPopulars(newPage)
+		} 
+			
+	}
+
+	fetchTyped(value, page) {
 		const { fetchData, loginData } = this.props;
-		value ?
-			fetchData(`https://api.themoviedb.org/3/search/movie?api_key=${loginData.key}&language=en-US&query=${value}&page=1&include_adult=false`)
-			:
-			fetchData(`https://api.themoviedb.org/3/movie/popular?api_key=${loginData.key}&language=en-US&page=1`);
+		fetchData(`https://api.themoviedb.org/3/search/movie?api_key=${loginData.key}&language=en-US&query=${value}&page=${page}&include_adult=false`)
+	}
+
+	fetchPopulars(page) {
+		const { fetchData, loginData } = this.props;
+		fetchData(`https://api.themoviedb.org/3/movie/popular?api_key=${loginData.key}&language=en-US&page=${page}`);
 	}
 
 	render() {
-		const { fetchedItems } = this.props;
+		const { fetchedItems, loginData } = this.props;
+		
+		if(!loginData) {
+			return <Redirect to='/login' />
+		}
+		
 		return (
 			<div className='main-container'>
-				<SearchField inputHandler={(value) => this.fetchTyped(value)} />
-				<FilmCards data={fetchedItems} />
+				<SearchField fetchDecider={(value) => this.fetchDecider(value, 1, 'search')} />
+				<FilmCards data={fetchedItems} fetchDecider={(page) => this.fetchDecider(null, page)}/>
 			</div>
 		)
 	}

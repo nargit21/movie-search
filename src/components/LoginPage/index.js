@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { TextField, Button, Typography } from '@material-ui/core';
 import { itemsFetchData, loginData } from '../../actions/items';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
 import './LoginPage.css';
 
 class Login extends Component {
@@ -45,7 +44,6 @@ class Login extends Component {
 							fullWidth={true}
 							label='Nickname'
 							onChange={(event) => this.inputHandler('nicknameInput', event)}
-							defaultValue='Nargit'
 							required={true}
 						/>
 						<TextField
@@ -55,7 +53,6 @@ class Login extends Component {
 							required={true}
 							error={hasErrored}
 							onChange={(event) => this.inputHandler('keyInput', event)}
-							defaultValue='7370c4e7078c5e5d5ad0b58ce292d84e'
 						/>
 						{!hasErrored && <div className='login-key-error'></div>}
 						{hasErrored && <Typography color='error'>Enter valid key</Typography>}

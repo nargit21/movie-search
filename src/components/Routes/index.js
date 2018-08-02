@@ -4,6 +4,7 @@ import Login from '../LoginPage';
 import HomePage from '../HomePage';
 import Header from '../Header';
 import FavoritesPage from '../FavoritesPage';
+import ReadMorePage from '../ReadMorePage';
 
 const Routes = () => {
 	return (
@@ -14,6 +15,7 @@ const Routes = () => {
 				<Route path='/login' component={Login} />
 				<Route exact path='/home' component={HomePage} />
 				<Route path='/home/favorites' component={FavoritesPage} />
+				<Route path='/home/:film' component={ReadMorePage} />
 			</Switch>
 		</Fragment>
 	)

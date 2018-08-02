@@ -4,8 +4,10 @@ import './SearchField.css';
 
 class SearchField extends Component {
 
-	inputHandler(event) {
-		this.props.inputHandler(event.target.value)
+	inputHandler = (event) => {
+		const { fetchDecider } = this.props;
+
+		fetchDecider(event.target.value)
 	}
 
 	render() {
@@ -14,12 +16,11 @@ class SearchField extends Component {
 				<TextField
 					label="Search"
 					fullWidth={true}
-					onChange={(event) => this.inputHandler(event)}
+					onChange={this.inputHandler}
 				/>
 			</div>
 		)
 	}
 }
-
 
 export default SearchField;

@@ -3,6 +3,7 @@ export const ITEMS_IS_LOADING = 'ITEMS_IS_LOADING';
 export const ITEMS_HAS_ERRORED = 'ITEMS_HAS_ERRORED';
 export const SET_LOGIN_DATA = 'SET_LOGIN_DATA';
 export const USER_LOGOUT = 'USER_LOGOUT';
+export const RESET_FETCHED_DATA = 'RESET_FETCHED_DATA';
 
 export function itemsHasErrored(bool) {
     return {
@@ -32,6 +33,7 @@ export function itemsFetchData(url) {
         fetch(url)
             .then((response) => {
                 dispatch(itemsIsLoading(false));
+
                 if (!response.ok) {
                     throw Error(response.statusText);
                 }
@@ -53,5 +55,11 @@ export function loginData(data) {
 export function logout() {
     return {
         type: USER_LOGOUT
+    }
+}
+
+export function resetFetchedData() {
+    return {
+        type: RESET_FETCHED_DATA
     }
 }

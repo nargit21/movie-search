@@ -3,7 +3,8 @@ import {
 	ITEMS_IS_LOADING,
 	ITEMS_HAS_ERRORED,
 	SET_LOGIN_DATA,
-	USER_LOGOUT
+	USER_LOGOUT,
+	RESET_FETCHED_DATA
 } from '../actions/items'
 import { combineReducers } from 'redux';
 
@@ -31,7 +32,8 @@ function items(state = null, action) {
 	switch (action.type) {
 		case ITEMS_FETCH_DATA_SUCCESS:
 			return action.items;
-
+		case RESET_FETCHED_DATA:
+			return state = null;
 		default:
 			return state;
 	}

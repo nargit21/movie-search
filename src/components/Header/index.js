@@ -4,7 +4,6 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Button,
   IconButton,
   Tabs,
   Tab,
@@ -17,9 +16,10 @@ import Favorite from '@material-ui/icons/Favorite';
 import red from '@material-ui/core/colors/red';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/items';
+import { Redirect} from 'react-router-dom';
 
 const styles = theme => ({
-	headerTabs: {
+  headerTabs: {
     flexGrow: 0.8
   },
   headerTitle: {
@@ -60,6 +60,10 @@ class Header extends React.Component {
     const { value, anchorEl } = this.state;
     const { loginData, classes } = this.props;
 
+    if(!loginData) {
+			return <Redirect to='/login' />
+		}
+
     return (
       <div>
         <AppBar position="static">
@@ -72,15 +76,18 @@ class Header extends React.Component {
               Movie search
             </Typography>
             <div className='header-user'>
-              <Button
+              <IconButton
                 color="inherit"
-                className='logout-button'
                 aria-owns={anchorEl ? 'simple-menu' : null}
                 aria-haspopup="true"
-                onClick={this.handleClick}
-              >
-                {loginData.username}
-              </Button>
+                onClick={this.handleClick}>
+                <Avatar
+                  aria-label='Username avatar'
+                  className={classes.usernameAvatar}
+                >
+                  {loginData.username.slice(0, 2).toUpperCase()}
+                </Avatar>
+              </IconButton>
               <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}
@@ -89,14 +96,6 @@ class Header extends React.Component {
               >
                 <MenuItem onClick={this.logout}>Logout</MenuItem>
               </Menu>
-              <IconButton color="inherit">
-                <Avatar
-                  aria-label='Username avatar'
-                  className={classes.usernameAvatar}
-                >
-                  {loginData.username.slice(0, 2).toUpperCase()}
-                </Avatar>
-              </IconButton>
             </div>
           </Toolbar>
         </AppBar>

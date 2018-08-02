@@ -3,6 +3,7 @@ import FilmCards from '../FilmCards';
 import { connect } from 'react-redux';
 import { getFavorites } from '../../utils/helpers';
 import { Typography } from '@material-ui/core/';
+import { Redirect} from 'react-router-dom';
 
 class FavoritesPage extends Component {
 	state = {
@@ -11,11 +12,18 @@ class FavoritesPage extends Component {
 
 	componentDidMount() {
 		const { loginData } = this.props;
-		this.setState({ favorites: getFavorites(loginData.username) })
+		
+		loginData && this.setState({ favorites: getFavorites(loginData.username) })
 	}
 
 	render() {
 		const { favorites } = this.state;
+		const { loginData } = this.props;
+		
+		if(!loginData) {
+			return <Redirect to='/login' />
+		}
+
 		return (
 			<div>
 				{
